@@ -1,5 +1,6 @@
 import { Assistant } from "next/font/google";
 import "./globals.css";
+import { GlobalProvider } from "@/components/Application/GlobalProvider";
 const AssistantFont = Assistant({
   weight: ["400", "500", "600", "700", "800"],
   subsets: ["latin"],
@@ -13,7 +14,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${AssistantFont.className}`}>{children}</body>
+      <body className={`${AssistantFont.className}`}>
+        <GlobalProvider>{children}</GlobalProvider>
+      </body>
     </html>
   );
 }

@@ -21,7 +21,11 @@ import { Input } from "@/components/ui/input";
 import { ButtonLoading } from "@/components/Application/ButtonLoading";
 import Link from "next/link";
 import { WEBSITE_REGISTER } from "../../../../../routes/website";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { login } from "../../../../../store/reducer/authReducer";
 export default function LoginPage() {
+  const dispatch = useDispatch();
   const formSchema = loginSchema
     .pick({
       email: true,
@@ -36,7 +40,11 @@ export default function LoginPage() {
       password: "",
     },
   });
-  const onSubmit = async (value) => {};
+  const onSubmit = async (value) => {
+    let { data } = await axios.post("/api/auth/login", value);
+    console.log(data.data);
+    dispatch(login(data.data  ));
+  };
   return (
     <div>
       <Card className="w-[400px]">

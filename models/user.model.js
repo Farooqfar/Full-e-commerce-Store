@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema(
       },
     },
     isEmailVerified: {
-      type: boolean,
+      type: Boolean,
       default: false,
     },
     phone: {
@@ -62,10 +62,8 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.method = {
-  comparePassword: async function (password) {
-    await bcrypt.compare(password, this.password);
-  },
+userSchema.methods.comparePassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
 };
 
 const UserModel =

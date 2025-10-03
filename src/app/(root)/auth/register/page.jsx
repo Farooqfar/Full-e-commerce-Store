@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { ButtonLoading } from "@/components/Application/ButtonLoading";
 import Link from "next/link";
 import { WEBSITE_REGISTER } from "../../../../../routes/website";
+import axios from "axios";
 export default function LoginPage() {
   const formSchema = loginSchema
     .pick({
@@ -46,7 +47,15 @@ export default function LoginPage() {
       cpassword: "",
     },
   });
-  const onSubmit = async (value) => {};
+  const onSubmit = async (value) => {
+    const payload = {
+      name: value.Fname + " " + value.Lname, // ✅ merge
+      email: value.email,
+      password: value.password,
+    };
+    const { data } = await axios.post("/api/auth/register", value);
+    form.reset();
+  };
   return (
     <div>
       <Card className="w-[400px]">
