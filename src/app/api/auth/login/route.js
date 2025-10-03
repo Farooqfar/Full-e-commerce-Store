@@ -35,6 +35,17 @@ export async function POST(request) {
   if (ispassword) {
     let saveCookies = cookies();
     saveCookies.set("login_token", secret);
+    const data = {
+      id: getuser._id,
+      name: getuser.name,
+      role: getuser.role,
+      email: getuser.email,
+    };
+    return NextResponse.json({
+      success: true,
+      status: 201,
+      data: data,
+    });
   }
 
   await optModel.deleteMany({ email });
@@ -55,15 +66,4 @@ export async function POST(request) {
 
   await newOtp.save();
   const otpmail = await sendMail("your otp", email, otpEmail(otp));
-  const data = {
-    id: getuser._id,
-    name: getuser.name,
-    role: getuser.role,
-    email: getuser.email,
-  };
-  return NextResponse.json({
-    success: true,
-    status: 201,
-    data: data,
-  });
 }
