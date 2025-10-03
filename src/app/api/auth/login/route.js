@@ -1,6 +1,6 @@
 import { connectDB } from "@/lib/dataBaseConnection";
 import { loginSchema } from "@/lib/zodSchema";
-import z from "zod";
+import z, { success } from "zod";
 import UserModel from "../../../../../models/user.model";
 import optModel from "../../../../../models/otp.model";
 import { NextResponse } from "next/server";
@@ -10,7 +10,8 @@ import { cookies } from "next/headers";
 import { SignJWT } from "jose";
 
 export async function POST(request) {
-  await connectDB();
+  try{
+    await connectDB();
   const payload = await request.json();
   const validationSchema = loginSchema
     .pick({
@@ -66,4 +67,9 @@ export async function POST(request) {
 
   await newOtp.save();
   const otpmail = await sendMail("your otp", email, otpEmail(otp));
+}}catch(error){
+  return NextResponse({
+    status:400,
+    success:false
+  })
 }
