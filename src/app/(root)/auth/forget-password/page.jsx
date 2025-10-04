@@ -27,7 +27,7 @@ import {
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { login } from "../../../../../store/reducer/authReducer";
-export default function LoginPage() {
+export default function ForgetPassword() {
   const dispatch = useDispatch();
   const formSchema = loginSchema
     .pick({
@@ -52,18 +52,8 @@ export default function LoginPage() {
     <div>
       <Card className="w-[400px]">
         <CardContent>
-          <div className="flex justify-center">
-            <Image
-              src="/assets/images/logo-black.png"
-              width={120}
-              height={120}
-              alt="logo"
-              className="max-w-[150px] object-contain h-auto"
-            />
-          </div>
           <div className="text-center">
-            <h1 className="font-bold">Login</h1>
-            <p>Login Into Your Account</p>
+            <h1 className="font-bold">Forget Password</h1>
           </div>
           <div>
             <Form {...form}>
