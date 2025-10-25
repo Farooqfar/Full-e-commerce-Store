@@ -1,29 +1,28 @@
 import mongoose from "mongoose";
-const MONGODB_URL = process.env.MONGODB_URL;
+const mongo_db = process.env.MONGODB_URL;
 let cached = global.mongoose;
 if (!cached) {
   cached = global.mongoose = {
     conn: null,
-    promise: null,
+    promises: null,
   };
 }
 
 export const connectDB = async () => {
   if (cached.conn) return cached.conn;
-  if (!cached.promise) {
-    cached.promise = mongoose
-      .connect(MONGODB_URL, {
+  if (!cached.promises) {
+    cached.promises = mongoose
+      .connect(mongo_db, {
         dbName: "FullStore",
         bufferCommands: false,
       })
       .then((mongoose) => {
         return mongoose;
       })
-      .catch((error) => {
-        cached.promise = null;
-        throw error;
+      .then((mongoose) => {
+        return mongoose;
       });
   }
-  cached.conn = await cached.promise;
-  return cached.conn;
+
+
 };
