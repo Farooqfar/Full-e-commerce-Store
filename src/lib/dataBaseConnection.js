@@ -24,5 +24,6 @@ export const connectDB = async () => {
       });
   }
 
-
+  cached.conn = await cached.promises;
+  return cached.conn;
 };
